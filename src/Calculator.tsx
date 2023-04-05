@@ -1,84 +1,54 @@
-import { Grid, Input, Slider, Text, Card, Radio, Spacer } from "@geist-ui/core";
-import { useEffect, useState } from "react";
+import { Github, TrendingUp, TrendingDown, Send } from "lucide-react";
 
-const Calculator = () => {
-  const [longOrShort, setLongOrShort] = useState<"long" | "short">("long");
-  const [maxLoss, setMaxLoss] = useState<number>();
-  const [enterPrice, setEnterPrice] = useState<number>();
-  const [exitPrice, setExitPrice] = useState<number>();
-  const [leverage, setLeverage] = useState<number>(1);
-  const [security, setSecurity] = useState<number>(0);
-
-  useEffect(() => {
-    if (maxLoss && enterPrice && exitPrice) {
-      let sl;
-      if (longOrShort === "long") {
-        sl = (enterPrice - exitPrice) / enterPrice;
-      } else {
-        sl = (exitPrice - enterPrice) / enterPrice;
-      }
-      let value = maxLoss / sl;
-      let security = Math.round((value / leverage) * 100) / 100;
-      setSecurity(security);
-    }
-  }, [longOrShort, maxLoss, enterPrice, exitPrice, leverage]);
-
+export default function Calculator() {
   return (
-    <div>
-      <Grid.Container gap={1} justify="center">
-        <Grid xs={12} padding={2} direction="column">
-          多單 / 空單
-          <Spacer h={0.5} />
-          <Radio.Group value="1" useRow>
-            <Radio value="1" onChange={() => setLongOrShort("long")}>
-              做多
-            </Radio>
-            <Radio value="2" onChange={() => setLongOrShort("short")}>
-              做空
-            </Radio>
-          </Radio.Group>
-        </Grid>
-        <Grid xs={12} padding={2}>
-          <Input
-            labelRight="usdt"
-            onChange={(d) => setMaxLoss(Number(d.target.value))}
-          >
-            最高承受風險
-          </Input>
-        </Grid>
-        <Grid xs={12} padding={2}>
-          <Input
-            labelRight="usdt"
-            onChange={(d) => setEnterPrice(Number(d.target.value))}
-          >
-            入場點位
-          </Input>
-        </Grid>
-        <Grid xs={12} padding={2}>
-          <Input
-            labelRight="usdt"
-            onChange={(d) => setExitPrice(Number(d.target.value))}
-          >
-            止損點位
-          </Input>
-        </Grid>
-        <Grid xs={24} padding={2} direction="column">
-          <Text>槓桿倍數</Text>
-          <Slider
-            initialValue={1}
-            min={1}
-            max={125}
-            onChange={(d) => setLeverage(d)}
-          />
-        </Grid>
-        <Grid xs={24} padding={2}>
-          <Card>
-            <p>保證金：{security} usdt</p>
-          </Card>
-        </Grid>
-      </Grid.Container>
-    </div>
+    <>
+      <div className="w-screen flex justify-end px-8 mt-8 mb-12 relative">
+        <div className="h-96 w-96 bg-gradient-to-r from-sky-500 to-sky-200 absolute rounded-full blur-3xl opacity-40 left-0 top-0 -ml-40 -mt-40 -z-10"></div>
+        <Github />
+      </div>
+      <div className="w-screen px-12 mb-12 space-y-2">
+        <h1 className="text-nord0 font-black text-xl tracking-widest">合約倉位計算器</h1>
+        <h2 className="text-nord3 text-xs tracking-widest">以最大承受風險來回推倉位保證金大小</h2>
+      </div>
+      <div className="w-screen px-20 flex justify-between mb-12">
+        <button className="flex items-center justify-center space-x-2 text-white bg-nord9 px-5 py-3 rounded-lg">
+          <TrendingUp className="h-4 w-4" />
+          <p className="text-xs font-semibold">做 多</p>
+        </button>
+        <button className="flex items-center justify-center space-x-2 text-nord0 bg-none px-5 py-3 rounded-lg">
+          <TrendingDown className="h-4 w-4" />
+          <p className="text-xs font-semibold">做 多</p>
+        </button>
+      </div>
+      <div className="w-screen flex flex-col px-14 space-y-7">
+        <div className="space-y-1">
+          <label className="text-nord3 text-xs tracking-widest">最高承受風險（USDT）</label>
+          <input className="w-full bg-nord6 rounded-lg h-12" type="text" />
+        </div>
+        <div className="space-y-1">
+          <label className="text-nord3 text-xs tracking-widest">最高承受風險（USDT）</label>
+          <input className="w-full bg-nord6 rounded-lg h-12" type="text" />
+        </div>
+        <div className="space-y-1">
+          <label className="text-nord3 text-xs tracking-widest">最高承受風險（USDT）</label>
+          <input className="w-full bg-nord6 rounded-lg h-12" type="text" />
+        </div>
+        <div className="flex space-x-5">
+          <div className="space-y-1">
+            <label className="text-nord3 text-xs tracking-widest">止損價格（USDT）</label>
+            <input className="w-full bg-nord6 rounded-lg h-12" type="text" />
+          </div>
+          <div className="space-y-1">
+            <label className="text-nord3 text-xs tracking-widest">止盈價格（USDT）</label>
+            <input className="w-full bg-nord6 rounded-lg h-12" type="text" />
+          </div>
+        </div>
+        <button className="flex items-center space-x-2 text-white bg-nord7 px-5 py-3 rounded-lg justify-center">
+          <Send className="h-4 w-4" />
+          <p className="text-xs font-semibold">產 生</p>
+        </button>
+      </div>
+    </>
   );
-};
-
-export default Calculator;
+}
