@@ -100,11 +100,11 @@ export default function Calculator() {
           </div>
         </Dialog>
       </Transition>
-      <div className="w-screen flex justify-end px-8 mt-8 mb-8 relative">
-        <div className="h-96 w-96 bg-gradient-to-r from-sky-500 to-sky-200 absolute rounded-full blur-3xl opacity-40 left-0 top-0 -ml-40 -mt-40 -z-10"></div>
+      <div className="h-72 w-72 bg-gradient-to-r from-sky-500 to-sky-200 absolute rounded-full blur-3xl opacity-25 -left-28 -top-28 -z-10"></div>
+      <div className="w-screen flex justify-end px-8 mt-6 mb-8 relative">
         <Github />
       </div>
-      <div className="w-screen px-12 mb-8 space-y-2">
+      <div className="w-screen px-12 mb-6 space-y-2">
         <h1 className="text-nord0 font-black text-xl tracking-widest">
           合約倉位計算器
         </h1>
@@ -122,37 +122,35 @@ export default function Calculator() {
           <p className="text-xs font-semibold">做 空</p>
         </button>
       </div>
-      <div className="w-screen flex flex-col px-14 space-y-6">
+      <div className="w-screen flex flex-col px-14 space-y-5">
         <div className="space-y-1">
           <label className="text-nord3 text-xs tracking-widest">
             最高承受風險（USDT）
           </label>
-          <input className="w-full bg-nord6 rounded-lg h-12" type="text" />
+          <input className="w-full bg-nord6 rounded-lg h-10" type="text" />
         </div>
         <div className="space-y-1">
           <label className="text-nord3 text-xs tracking-widest">
-            最高承受風險（USDT）
+            入場價格（USDT）
           </label>
-          <input className="w-full bg-nord6 rounded-lg h-12" type="text" />
+          <input className="w-full bg-nord6 rounded-lg h-10" type="text" />
         </div>
         <div className="space-y-1">
-          <label className="text-nord3 text-xs tracking-widest">
-            最高承受風險（USDT）
-          </label>
-          <input className="w-full bg-nord6 rounded-lg h-12" type="text" />
+          <label className="text-nord3 text-xs tracking-widest">槓桿倍數</label>
+          <input className="w-full bg-nord6 rounded-lg h-10" type="text" />
         </div>
         <div className="flex space-x-5">
           <div className="space-y-1">
             <label className="text-nord3 text-xs tracking-widest">
               止損價格（USDT）
             </label>
-            <input className="w-full bg-nord6 rounded-lg h-12" type="text" />
+            <input className="w-full bg-nord6 rounded-lg h-10" type="text" />
           </div>
           <div className="space-y-1">
             <label className="text-nord3 text-xs tracking-widest">
               止盈價格（USDT）
             </label>
-            <input className="w-full bg-nord6 rounded-lg h-12" type="text" />
+            <input className="w-full bg-nord6 rounded-lg h-10" type="text" />
           </div>
         </div>
         <button
