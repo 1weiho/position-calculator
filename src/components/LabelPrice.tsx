@@ -1,12 +1,15 @@
-const LabelPrice = (Props: { label: string; price: number; nord: boolean }) => {
+const LabelPrice = (Props: {
+  label: string;
+  price: number;
+  priceNordColor: boolean;
+}) => {
   return (
     <>
       <label className="text-nord3 text-xs">{Props.label}</label>
       <p
         className={
-          Props.nord
-            ? "text-nord8"
-            : "text-nord3" + " text-xl tracking-widest font-bold"
+          (Props.priceNordColor ? "text-nord8" : "text-nord3") +
+          " text-xl tracking-widest font-bold"
         }
       >
         {Props.price}
