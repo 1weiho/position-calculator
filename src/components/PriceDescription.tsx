@@ -10,9 +10,9 @@ const PriceDescription = (Props: {
         <span
           className={Props.type === "profit" ? "text-nord8" : "text-nord11"}
         >
-          {Props.price}USDT
-        </span>{" "}
-        回報率{" "}
+          {Props.price.toFixed(2)}USDT
+        </span>
+        ，回報率{" "}
         <span
           className={Props.type === "profit" ? "text-nord8" : "text-nord11"}
         >
