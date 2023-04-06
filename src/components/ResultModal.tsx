@@ -46,7 +46,7 @@ const calcSl = (
   let roi = (enterPrice - slPrice) / enterPrice;
   return {
     price: security * leverage * roi,
-    roi: roi,
+    roi: roi * leverage,
   };
 };
 
@@ -60,7 +60,7 @@ const calcTp = (
   let roi = (tpPrice - enterPrice) / enterPrice;
   return {
     price: security * leverage * roi,
-    roi: roi,
+    roi: roi * leverage,
   };
 };
 
