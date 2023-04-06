@@ -88,7 +88,7 @@ const ResultModal = (Props: {
     security,
     Props.inputData.leverage,
     Props.inputData.enterPrice,
-    Props.inputData.tpPrice
+    Props.inputData.slPrice
   );
 
   return (
