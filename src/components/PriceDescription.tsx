@@ -16,8 +16,7 @@ const PriceDescription = (Props: {
         <span
           className={Props.type === "profit" ? "text-nord8" : "text-nord11"}
         >
-          {(Props.type === "profit" ? "+" : "-") + (Props.roi * 100).toFixed(2)}
-          %
+          {(Props.type === "profit" ? "+" : "") + (Props.roi * 100).toFixed(2)}%
         </span>
       </p>
     </>

@@ -31,6 +31,39 @@ const calcSecurity = (
   return security;
 };
 
+type slAndTpDescription = {
+  price: number;
+  roi: number;
+};
+
+// TODO: short position calculate logic
+const calcSl = (
+  security: number,
+  leverage: number,
+  enterPrice: number,
+  slPrice: number
+): slAndTpDescription => {
+  let roi = (enterPrice - slPrice) / enterPrice;
+  return {
+    price: security * leverage * roi,
+    roi: roi,
+  };
+};
+
+// TODO: short position calculate logic
+const calcTp = (
+  security: number,
+  leverage: number,
+  enterPrice: number,
+  tpPrice: number
+): slAndTpDescription => {
+  let roi = (tpPrice - enterPrice) / enterPrice;
+  return {
+    price: security * leverage * roi,
+    roi: roi,
+  };
+};
+
 const ResultModal = (Props: {
   isOpen: boolean;
   closeModal: () => void;
@@ -43,6 +76,21 @@ const ResultModal = (Props: {
     Props.inputData.maxLoss,
     Props.inputData.leverage
   );
+
+  const tp: slAndTpDescription = calcTp(
+    security,
+    Props.inputData.leverage,
+    Props.inputData.enterPrice,
+    Props.inputData.tpPrice
+  );
+
+  const sl: slAndTpDescription = calcSl(
+    security,
+    Props.inputData.leverage,
+    Props.inputData.enterPrice,
+    Props.inputData.tpPrice
+  );
+
   return (
     <>
       <Transition appear show={Props.isOpen} as={Fragment}>
@@ -101,8 +149,11 @@ const ResultModal = (Props: {
                         price={Props.inputData.tpPrice}
                         priceNordColor={false}
                       />
-                      {/* TODO: calculate the profit result */}
-                      <PriceDescription type="profit" price={30} roi={0.205} />
+                      <PriceDescription
+                        type="profit"
+                        price={tp.price}
+                        roi={tp.roi}
+                      />
                     </div>
                   </div>
                   <div className="mt-4 w-full flex justify-between">
@@ -112,8 +163,11 @@ const ResultModal = (Props: {
                         price={Props.inputData.slPrice}
                         priceNordColor={false}
                       />
-                      {/* TODO: calculate the loss result */}
-                      <PriceDescription type="loss" price={30} roi={0.105} />
+                      <PriceDescription
+                        type="loss"
+                        price={sl.price}
+                        roi={sl.roi}
+                      />
                     </div>
                   </div>
                 </Dialog.Panel>
