@@ -101,7 +101,7 @@ export default function Calculator() {
           </div>
         </div>
       </div>
-      <div className="w-full mt-10 px-14">
+      <div className="w-full mt-8 px-14">
         <button
           className="w-full flex items-center space-x-2 text-white bg-nord7 px-5 py-3 rounded-lg justify-center"
           onClick={openModal}
