@@ -112,12 +112,12 @@ export default function Calculator() {
           以最大承受風險來回推倉位保證金大小
         </h2>
       </div>
-      <div className="w-screen px-20 flex justify-between mb-8">
-        <button className="flex items-center justify-center space-x-2 text-white bg-nord9 px-5 py-3 rounded-lg">
+      <div className="w-screen px-14 flex justify-between mb-8">
+        <button className="flex items-center justify-center space-x-2 text-white bg-nord9 px-7 py-3 rounded-lg">
           <TrendingUp className="h-4 w-4" />
           <p className="text-xs font-semibold">做 多</p>
         </button>
-        <button className="flex items-center justify-center space-x-2 text-nord0 bg-none px-5 py-3 rounded-lg">
+        <button className="flex items-center justify-center space-x-2 text-nord0 bg-none px-7 py-3 rounded-lg">
           <TrendingDown className="h-4 w-4" />
           <p className="text-xs font-semibold">做 空</p>
         </button>
@@ -153,8 +153,10 @@ export default function Calculator() {
             <input className="w-full bg-nord6 rounded-lg h-10" type="text" />
           </div>
         </div>
+      </div>
+      <div className="w-full mt-10 px-14">
         <button
-          className="flex items-center space-x-2 text-white bg-nord7 px-5 py-3 rounded-lg justify-center"
+          className="w-full flex items-center space-x-2 text-white bg-nord7 px-5 py-3 rounded-lg justify-center"
           onClick={openModal}
         >
           <CalculatorIcon className="h-4 w-4" />
