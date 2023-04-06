@@ -11,7 +11,7 @@ const LongShortSwitch = (Props: {
         className={
           (Props.switchType === Props.longOrShort
             ? "bg-nord9 text-white "
-            : "bg-none text-nord0 ") +
+            : "bg-transparent text-nord0 ") +
           "flex items-center justify-center space-x-2 px-7 py-3 rounded-lg duration-300 transition-all"
         }
         onClick={() => Props.setLongOrShort(Props.switchType)}
