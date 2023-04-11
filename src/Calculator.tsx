@@ -82,7 +82,7 @@ export default function Calculator() {
         }}
       />
       <Head />
-      <div className="w-screen px-14 flex justify-between mb-8">
+      <div className="w-full px-14 flex justify-between mb-8">
         <LongShortSwitch
           switchType="long"
           longOrShort={longOrShort}
@@ -94,7 +94,7 @@ export default function Calculator() {
           setLongOrShort={setLongOrShort}
         />
       </div>
-      <div className="w-screen flex flex-col px-14 space-y-5">
+      <div className="w-full flex flex-col px-14 space-y-5">
         <div className="space-y-1">
           <label className="text-nord3 text-xs tracking-widest">
             最高承受風險（USDT）
@@ -125,8 +125,8 @@ export default function Calculator() {
             onChange={(d) => setLeverage(Number(d.target.value))}
           />
         </div>
-        <div className="flex space-x-5">
-          <div className="space-y-1">
+        <div className="flex space-x-5 w-full">
+          <div className="space-y-1 w-full">
             <label className="text-nord3 text-xs tracking-widest">
               止盈價格（USDT）
             </label>
@@ -136,7 +136,7 @@ export default function Calculator() {
               onChange={(d) => setTpPrice(Number(d.target.value))}
             />
           </div>
-          <div className="space-y-1">
+          <div className="space-y-1 w-full">
             <label className="text-nord3 text-xs tracking-widest">
               止損價格（USDT）
             </label>
