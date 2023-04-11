@@ -46,9 +46,24 @@ export default function Calculator() {
     if (tpPrice <= 0) {
       handleErrorInput("止盈價格需大於 0");
       return;
-    } else {
-      openModal();
     }
+    if (slPrice >= enterPrice && longOrShort === "long") {
+      handleErrorInput("止損價格需小於入場價格");
+      return;
+    }
+    if (slPrice <= enterPrice && longOrShort === "short") {
+      handleErrorInput("止損價格需大於入場價格");
+      return;
+    }
+    if (tpPrice <= enterPrice && longOrShort === "long") {
+      handleErrorInput("止盈價格需大於入場價格");
+      return;
+    }
+    if (tpPrice >= enterPrice && longOrShort === "short") {
+      handleErrorInput("止盈價格需小於入場價格");
+      return;
+    }
+    openModal();
   };
 
   return (
