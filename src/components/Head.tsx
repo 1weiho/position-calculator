@@ -3,7 +3,8 @@ import { Github } from "lucide-react";
 const Head = () => {
   return (
     <>
-      <div className="h-72 w-72 bg-gradient-to-r from-sky-500 to-sky-200 absolute rounded-full blur-3xl opacity-25 -left-28 -top-28 -z-10"></div>
+      {/* FIX: Wrong color display on ios safari. */}
+      {/* <div className="h-72 w-72 bg-gradient-to-r from-sky-500 to-sky-200 absolute rounded-full blur-3xl opacity-25 -left-28 -top-28 -z-10"></div> */}
       <div className="w-screen flex justify-end px-8 mt-6 mb-8 relative">
         <a href="https://github.com/davidho0403/position-calculator">
           <Github />
