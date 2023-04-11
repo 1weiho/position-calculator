@@ -12,7 +12,7 @@ const LabelPrice = (Props: {
           " text-xl tracking-widest font-bold"
         }
       >
-        {Props.price}
+        {Props.price.toLocaleString()}
       </p>
     </>
   );
