@@ -3,6 +3,11 @@ import { useState } from "react";
 import ResultModal from "./components/ResultModal";
 import Head from "./components/Head";
 import LongShortSwitch from "./components/LongShortSwitch";
+import { Toaster, toast } from "sonner";
+
+const handleErrorInput = (errMsg: string) => {
+  toast.error(errMsg);
+};
 
 export default function Calculator() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,8 +25,35 @@ export default function Calculator() {
   function openModal() {
     setIsOpen(true);
   }
+
+  const handleSubmit = () => {
+    if (maxLoss <= 0) {
+      handleErrorInput("最高承受風險需大於 0");
+      return;
+    }
+    if (enterPrice <= 0) {
+      handleErrorInput("入場價格需大於 0");
+      return;
+    }
+    if (leverage < 1 || leverage > 100) {
+      handleErrorInput("杠桿需介於 1 ~ 100");
+      return;
+    }
+    if (slPrice <= 0) {
+      handleErrorInput("止損價格需大於 0");
+      return;
+    }
+    if (tpPrice <= 0) {
+      handleErrorInput("止盈價格需大於 0");
+      return;
+    } else {
+      openModal();
+    }
+  };
+
   return (
     <>
+      <Toaster position="top-center" duration={2000} richColors />
       <ResultModal
         isOpen={isOpen}
         closeModal={closeModal}
@@ -104,7 +136,7 @@ export default function Calculator() {
       <div className="w-full mt-8 px-14">
         <button
           className="w-full flex items-center space-x-2 text-white bg-nord7 px-5 py-3 rounded-lg justify-center"
-          onClick={openModal}
+          onClick={handleSubmit}
         >
           <CalculatorIcon className="h-4 w-4" />
           <p className="text-xs font-semibold">計 算</p>
