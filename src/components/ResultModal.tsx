@@ -44,8 +44,8 @@ const calculateSl = (
 ): SlAndTpDescription => {
   const roi = (enterPrice - stopLossPrice) / enterPrice;
   return {
-    profitLossAmount: security * leverage * roi,
-    roi: roi * leverage,
+    profitLossAmount: Math.abs(security * leverage * roi),
+    roi: -Math.abs(roi * leverage),
   };
 };
 
@@ -58,7 +58,7 @@ const calculateTp = (
   const roi = Math.abs((takeProfitPrice - enterPrice) / enterPrice);
   return {
     profitLossAmount: security * leverage * roi,
-    roi: roi * leverage,
+    roi: Math.abs(roi * leverage),
   };
 };
 
