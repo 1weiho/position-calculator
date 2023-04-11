@@ -1,6 +1,6 @@
-const PriceDescription = (Props: {
+const ProfitLossDescription = (Props: {
   type: "loss" | "profit";
-  price: number;
+  profitLossAmount: number;
   roi: number;
 }) => {
   return (
@@ -10,7 +10,7 @@ const PriceDescription = (Props: {
         <span
           className={Props.type === "profit" ? "text-nord8" : "text-nord11"}
         >
-          {Props.price.toFixed(2)}USDT
+          {Props.profitLossAmount.toFixed(2)}USDT
         </span>
         ，回報率{" "}
         <span
@@ -23,4 +23,4 @@ const PriceDescription = (Props: {
   );
 };
 
-export default PriceDescription;
+export default ProfitLossDescription;

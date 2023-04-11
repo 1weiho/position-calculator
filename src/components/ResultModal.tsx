@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import LabelPrice from "./LabelPrice";
-import PriceDescription from "./PriceDescription";
+import ProfitLossDescription from "./ProfitLossDescription";
 import { X } from "lucide-react";
 
 type inputData = {
@@ -32,7 +32,7 @@ const calculateSecurityValue = (
 };
 
 type SlAndTpDescription = {
-  price: number;
+  profitLossAmount: number;
   roi: number;
 };
 
@@ -44,7 +44,7 @@ const calculateSl = (
 ): SlAndTpDescription => {
   const roi = (enterPrice - stopLossPrice) / enterPrice;
   return {
-    price: security * leverage * roi,
+    profitLossAmount: security * leverage * roi,
     roi: roi * leverage,
   };
 };
@@ -57,7 +57,7 @@ const calculateTp = (
 ): SlAndTpDescription => {
   const roi = Math.abs((takeProfitPrice - enterPrice) / enterPrice);
   return {
-    price: security * leverage * roi,
+    profitLossAmount: security * leverage * roi,
     roi: roi * leverage,
   };
 };
@@ -147,9 +147,9 @@ const ResultModal = (Props: {
                         price={Props.inputData.tpPrice}
                         priceNordColor={false}
                       />
-                      <PriceDescription
+                      <ProfitLossDescription
                         type="profit"
-                        price={tp.price}
+                        profitLossAmount={tp.profitLossAmount}
                         roi={tp.roi}
                       />
                     </div>
@@ -161,9 +161,9 @@ const ResultModal = (Props: {
                         price={Props.inputData.slPrice}
                         priceNordColor={false}
                       />
-                      <PriceDescription
+                      <ProfitLossDescription
                         type="loss"
-                        price={sl.price}
+                        profitLossAmount={sl.profitLossAmount}
                         roi={sl.roi}
                       />
                     </div>
