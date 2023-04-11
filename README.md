@@ -1,7 +1,7 @@
 <a href="https://position-calculator-jet.vercel.app">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/75478661/231220891-1f42c7b5-251b-464e-8e7d-30efecde9cce.png">
-    <img src="https://user-images.githubusercontent.com/75478661/231220910-a6a3a50e-0486-41ee-a716-f799c0c030e4.png">
+    <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/75478661/231222737-878ef241-fec6-449b-8f72-7dce058697c8.png">
+    <img src="https://user-images.githubusercontent.com/75478661/231222725-194dad08-a786-4c25-8b07-a023c8a847d1.png">
   </picture>
 </a>
 
