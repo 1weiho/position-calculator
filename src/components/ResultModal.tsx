@@ -13,7 +13,7 @@ type inputData = {
   tpPrice: number;
 };
 
-const calcSecurity = (
+const calculateSecurityValue = (
   longOrShort: "long" | "short",
   enterPrice: number,
   slPrice: number,
@@ -31,33 +31,31 @@ const calcSecurity = (
   return security;
 };
 
-type slAndTpDescription = {
+type SlAndTpDescription = {
   price: number;
   roi: number;
 };
 
-// TODO: short position calculate logic
-const calcSl = (
+const calculateSl = (
   security: number,
   leverage: number,
   enterPrice: number,
-  slPrice: number
-): slAndTpDescription => {
-  let roi = (enterPrice - slPrice) / enterPrice;
+  stopLossPrice: number
+): SlAndTpDescription => {
+  const roi = (enterPrice - stopLossPrice) / enterPrice;
   return {
     price: security * leverage * roi,
     roi: roi * leverage,
   };
 };
 
-// TODO: short position calculate logic
-const calcTp = (
+const calculateTp = (
   security: number,
   leverage: number,
   enterPrice: number,
-  tpPrice: number
-): slAndTpDescription => {
-  let roi = (tpPrice - enterPrice) / enterPrice;
+  takeProfitPrice: number
+): SlAndTpDescription => {
+  const roi = Math.abs((takeProfitPrice - enterPrice) / enterPrice);
   return {
     price: security * leverage * roi,
     roi: roi * leverage,
@@ -69,7 +67,7 @@ const ResultModal = (Props: {
   closeModal: () => void;
   inputData: inputData;
 }) => {
-  const security: number = calcSecurity(
+  const security: number = calculateSecurityValue(
     Props.inputData.longOrShort,
     Props.inputData.enterPrice,
     Props.inputData.slPrice,
@@ -77,14 +75,14 @@ const ResultModal = (Props: {
     Props.inputData.leverage
   );
 
-  const tp: slAndTpDescription = calcTp(
+  const tp: SlAndTpDescription = calculateTp(
     security,
     Props.inputData.leverage,
     Props.inputData.enterPrice,
     Props.inputData.tpPrice
   );
 
-  const sl: slAndTpDescription = calcSl(
+  const sl: SlAndTpDescription = calculateSl(
     security,
     Props.inputData.leverage,
     Props.inputData.enterPrice,
