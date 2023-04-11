@@ -14,7 +14,7 @@ export default function Calculator() {
   const [longOrShort, setLongOrShort] = useState<"long" | "short">("long");
   const [maxLoss, setMaxLoss] = useState<number>(0);
   const [enterPrice, setEnterPrice] = useState<number>(0);
-  const [leverage, setLeverage] = useState<number>(1);
+  const [leverage, setLeverage] = useState<number>(0);
   const [slPrice, setSlPrice] = useState<number>(0);
   const [tpPrice, setTpPrice] = useState<number>(0);
 
