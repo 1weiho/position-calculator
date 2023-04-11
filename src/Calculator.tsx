@@ -101,7 +101,7 @@ export default function Calculator() {
           </label>
           <input
             className="w-full bg-nord6 rounded-lg h-10 ps-4"
-            type="text"
+            type="number"
             onChange={(d) => setMaxLoss(Number(d.target.value))}
           />
         </div>
@@ -111,7 +111,7 @@ export default function Calculator() {
           </label>
           <input
             className="w-full bg-nord6 rounded-lg h-10 ps-4"
-            type="text"
+            type="number"
             onChange={(d) => setEnterPrice(Number(d.target.value))}
           />
         </div>
@@ -121,7 +121,7 @@ export default function Calculator() {
           </label>
           <input
             className="w-full bg-nord6 rounded-lg h-10 ps-4"
-            type="text"
+            type="number"
             onChange={(d) => setLeverage(Number(d.target.value))}
           />
         </div>
@@ -132,7 +132,7 @@ export default function Calculator() {
             </label>
             <input
               className="w-full bg-nord6 rounded-lg h-10 ps-4"
-              type="text"
+              type="number"
               onChange={(d) => setSlPrice(Number(d.target.value))}
             />
           </div>
@@ -142,7 +142,7 @@ export default function Calculator() {
             </label>
             <input
               className="w-full bg-nord6 rounded-lg h-10 ps-4"
-              type="text"
+              type="number"
               onChange={(d) => setTpPrice(Number(d.target.value))}
             />
           </div>
