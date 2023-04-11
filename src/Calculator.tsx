@@ -128,22 +128,22 @@ export default function Calculator() {
         <div className="flex space-x-5">
           <div className="space-y-1">
             <label className="text-nord3 text-xs tracking-widest">
-              止損價格（USDT）
-            </label>
-            <input
-              className="w-full bg-nord6 rounded-lg h-10 ps-4"
-              type="number"
-              onChange={(d) => setSlPrice(Number(d.target.value))}
-            />
-          </div>
-          <div className="space-y-1">
-            <label className="text-nord3 text-xs tracking-widest">
               止盈價格（USDT）
             </label>
             <input
               className="w-full bg-nord6 rounded-lg h-10 ps-4"
               type="number"
               onChange={(d) => setTpPrice(Number(d.target.value))}
+            />
+          </div>
+          <div className="space-y-1">
+            <label className="text-nord3 text-xs tracking-widest">
+              止損價格（USDT）
+            </label>
+            <input
+              className="w-full bg-nord6 rounded-lg h-10 ps-4"
+              type="number"
+              onChange={(d) => setSlPrice(Number(d.target.value))}
             />
           </div>
         </div>
