@@ -1,84 +1,162 @@
-import { Grid, Input, Slider, Text, Card, Radio, Spacer } from "@geist-ui/core";
-import { useEffect, useState } from "react";
+import { CalculatorIcon } from "lucide-react";
+import { useState } from "react";
+import ResultModal from "./components/ResultModal";
+import Head from "./components/Head";
+import LongShortSwitch from "./components/LongShortSwitch";
+import { Toaster, toast } from "sonner";
 
-const Calculator = () => {
-  const [longOrShort, setLongOrShort] = useState<"long" | "short">("long");
-  const [maxLoss, setMaxLoss] = useState<number>();
-  const [enterPrice, setEnterPrice] = useState<number>();
-  const [exitPrice, setExitPrice] = useState<number>();
-  const [leverage, setLeverage] = useState<number>(1);
-  const [security, setSecurity] = useState<number>(0);
-
-  useEffect(() => {
-    if (maxLoss && enterPrice && exitPrice) {
-      let sl;
-      if (longOrShort === "long") {
-        sl = (enterPrice - exitPrice) / enterPrice;
-      } else {
-        sl = (exitPrice - enterPrice) / enterPrice;
-      }
-      let value = maxLoss / sl;
-      let security = Math.round((value / leverage) * 100) / 100;
-      setSecurity(security);
-    }
-  }, [longOrShort, maxLoss, enterPrice, exitPrice, leverage]);
-
-  return (
-    <div>
-      <Grid.Container gap={1} justify="center">
-        <Grid xs={12} padding={2} direction="column">
-          多單 / 空單
-          <Spacer h={0.5} />
-          <Radio.Group value="1" useRow>
-            <Radio value="1" onChange={() => setLongOrShort("long")}>
-              做多
-            </Radio>
-            <Radio value="2" onChange={() => setLongOrShort("short")}>
-              做空
-            </Radio>
-          </Radio.Group>
-        </Grid>
-        <Grid xs={12} padding={2}>
-          <Input
-            labelRight="usdt"
-            onChange={(d) => setMaxLoss(Number(d.target.value))}
-          >
-            最高承受風險
-          </Input>
-        </Grid>
-        <Grid xs={12} padding={2}>
-          <Input
-            labelRight="usdt"
-            onChange={(d) => setEnterPrice(Number(d.target.value))}
-          >
-            入場點位
-          </Input>
-        </Grid>
-        <Grid xs={12} padding={2}>
-          <Input
-            labelRight="usdt"
-            onChange={(d) => setExitPrice(Number(d.target.value))}
-          >
-            止損點位
-          </Input>
-        </Grid>
-        <Grid xs={24} padding={2} direction="column">
-          <Text>槓桿倍數</Text>
-          <Slider
-            initialValue={1}
-            min={1}
-            max={125}
-            onChange={(d) => setLeverage(d)}
-          />
-        </Grid>
-        <Grid xs={24} padding={2}>
-          <Card>
-            <p>保證金：{security} usdt</p>
-          </Card>
-        </Grid>
-      </Grid.Container>
-    </div>
-  );
+const handleErrorInput = (errMsg: string) => {
+  toast.error(errMsg);
 };
 
-export default Calculator;
+export default function Calculator() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [longOrShort, setLongOrShort] = useState<"long" | "short">("long");
+  const [maxLoss, setMaxLoss] = useState<number>(0);
+  const [enterPrice, setEnterPrice] = useState<number>(0);
+  const [leverage, setLeverage] = useState<number>(0);
+  const [slPrice, setSlPrice] = useState<number>(0);
+  const [tpPrice, setTpPrice] = useState<number>(0);
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  const handleSubmit = () => {
+    if (maxLoss <= 0) {
+      handleErrorInput("最高承受風險需大於 0");
+      return;
+    }
+    if (enterPrice <= 0) {
+      handleErrorInput("入場價格需大於 0");
+      return;
+    }
+    if (leverage < 1 || leverage > 100) {
+      handleErrorInput("杠桿需介於 1 ~ 100");
+      return;
+    }
+    if (slPrice <= 0) {
+      handleErrorInput("止損價格需大於 0");
+      return;
+    }
+    if (tpPrice <= 0) {
+      handleErrorInput("止盈價格需大於 0");
+      return;
+    }
+    if (slPrice >= enterPrice && longOrShort === "long") {
+      handleErrorInput("止損價格需小於入場價格");
+      return;
+    }
+    if (slPrice <= enterPrice && longOrShort === "short") {
+      handleErrorInput("止損價格需大於入場價格");
+      return;
+    }
+    if (tpPrice <= enterPrice && longOrShort === "long") {
+      handleErrorInput("止盈價格需大於入場價格");
+      return;
+    }
+    if (tpPrice >= enterPrice && longOrShort === "short") {
+      handleErrorInput("止盈價格需小於入場價格");
+      return;
+    }
+    openModal();
+  };
+
+  return (
+    <>
+      <Toaster position="top-center" duration={2000} richColors />
+      <ResultModal
+        isOpen={isOpen}
+        closeModal={closeModal}
+        inputData={{
+          longOrShort: longOrShort,
+          maxLoss: maxLoss,
+          enterPrice: enterPrice,
+          leverage: leverage,
+          slPrice: slPrice,
+          tpPrice: tpPrice,
+        }}
+      />
+      <Head />
+      <div className="w-screen px-14 flex justify-between mb-8">
+        <LongShortSwitch
+          switchType="long"
+          longOrShort={longOrShort}
+          setLongOrShort={setLongOrShort}
+        />
+        <LongShortSwitch
+          switchType="short"
+          longOrShort={longOrShort}
+          setLongOrShort={setLongOrShort}
+        />
+      </div>
+      <div className="w-screen flex flex-col px-14 space-y-5">
+        <div className="space-y-1">
+          <label className="text-nord3 text-xs tracking-widest">
+            最高承受風險（USDT）
+          </label>
+          <input
+            className="w-full bg-nord6 rounded-lg h-10 ps-4"
+            type="number"
+            onChange={(d) => setMaxLoss(Number(d.target.value))}
+          />
+        </div>
+        <div className="space-y-1">
+          <label className="text-nord3 text-xs tracking-widest">
+            入場價格（USDT）
+          </label>
+          <input
+            className="w-full bg-nord6 rounded-lg h-10 ps-4"
+            type="number"
+            onChange={(d) => setEnterPrice(Number(d.target.value))}
+          />
+        </div>
+        <div className="space-y-1">
+          <label className="text-nord3 text-xs tracking-widest">
+            槓桿倍數（1 - 100）
+          </label>
+          <input
+            className="w-full bg-nord6 rounded-lg h-10 ps-4"
+            type="number"
+            onChange={(d) => setLeverage(Number(d.target.value))}
+          />
+        </div>
+        <div className="flex space-x-5">
+          <div className="space-y-1">
+            <label className="text-nord3 text-xs tracking-widest">
+              止損價格（USDT）
+            </label>
+            <input
+              className="w-full bg-nord6 rounded-lg h-10 ps-4"
+              type="number"
+              onChange={(d) => setSlPrice(Number(d.target.value))}
+            />
+          </div>
+          <div className="space-y-1">
+            <label className="text-nord3 text-xs tracking-widest">
+              止盈價格（USDT）
+            </label>
+            <input
+              className="w-full bg-nord6 rounded-lg h-10 ps-4"
+              type="number"
+              onChange={(d) => setTpPrice(Number(d.target.value))}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="w-full mt-8 px-14">
+        <button
+          className="w-full flex items-center space-x-2 text-white bg-nord7 px-5 py-3 rounded-lg justify-center"
+          onClick={handleSubmit}
+        >
+          <CalculatorIcon className="h-4 w-4" />
+          <p className="text-xs font-semibold">計 算</p>
+        </button>
+      </div>
+    </>
+  );
+}
