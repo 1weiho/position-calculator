@@ -4,6 +4,12 @@ import ResultModal from "./components/ResultModal";
 import Head from "./components/Head";
 import LongShortSwitch from "./components/LongShortSwitch";
 import { Toaster, toast } from "sonner";
+import {
+  ProfitLossSummary,
+  calculatePositionCost,
+  calculateSl,
+  calculateTp,
+} from "./utils/positionCalculator";
 
 const handleErrorInput = (errMsg: string) => {
   toast.error(errMsg);
@@ -66,6 +72,28 @@ export default function Calculator() {
     openModal();
   };
 
+  const positionCost: number = calculatePositionCost(
+    longOrShort,
+    enterPrice,
+    slPrice,
+    maxLoss,
+    leverage
+  );
+
+  const tp: ProfitLossSummary = calculateTp(
+    positionCost,
+    leverage,
+    enterPrice,
+    tpPrice
+  );
+
+  const sl: ProfitLossSummary = calculateSl(
+    positionCost,
+    leverage,
+    enterPrice,
+    slPrice
+  );
+
   return (
     <>
       <Toaster position="top-center" duration={2000} richColors />
@@ -80,6 +108,9 @@ export default function Calculator() {
           slPrice: slPrice,
           tpPrice: tpPrice,
         }}
+        positionCost={positionCost}
+        tp={tp}
+        sl={sl}
       />
       <Head />
       <div className="w-full px-14 flex justify-between mb-8">

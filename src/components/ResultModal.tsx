@@ -4,9 +4,7 @@ import LabelPrice from "./LabelPrice";
 import ProfitLossDescription from "./ProfitLossDescription";
 import { X } from "lucide-react";
 import {
-  calculatePositionCost,
-  calculateSl,
-  calculateTp,
+  ProfitLossSummary,
 } from "../utils/positionCalculator";
 
 type inputData = {
@@ -18,37 +16,14 @@ type inputData = {
   tpPrice: number;
 };
 
-type SlAndTpDescription = {
-  profitLossAmount: number;
-  roi: number;
-};
-
 const ResultModal = (Props: {
   isOpen: boolean;
   closeModal: () => void;
   inputData: inputData;
+  positionCost: number;
+  tp: ProfitLossSummary;
+  sl: ProfitLossSummary;
 }) => {
-  const positionCost: number = calculatePositionCost(
-    Props.inputData.longOrShort,
-    Props.inputData.enterPrice,
-    Props.inputData.slPrice,
-    Props.inputData.maxLoss,
-    Props.inputData.leverage
-  );
-
-  const tp: SlAndTpDescription = calculateTp(
-    positionCost,
-    Props.inputData.leverage,
-    Props.inputData.enterPrice,
-    Props.inputData.tpPrice
-  );
-
-  const sl: SlAndTpDescription = calculateSl(
-    positionCost,
-    Props.inputData.leverage,
-    Props.inputData.enterPrice,
-    Props.inputData.slPrice
-  );
 
   return (
     <>
@@ -89,7 +64,7 @@ const ResultModal = (Props: {
                     <div className="w-1/2">
                       <LabelPrice
                         label="持倉成本（USDT）"
-                        price={positionCost}
+                        price={Props.positionCost}
                         priceNordColor={true}
                       />
                     </div>
@@ -110,8 +85,8 @@ const ResultModal = (Props: {
                       />
                       <ProfitLossDescription
                         type="profit"
-                        profitLossAmount={tp.profitLossAmount}
-                        roi={tp.roi}
+                        profitLossAmount={Props.tp.profitLossAmount}
+                        roi={Props.tp.roi}
                       />
                     </div>
                   </div>
@@ -124,8 +99,8 @@ const ResultModal = (Props: {
                       />
                       <ProfitLossDescription
                         type="loss"
-                        profitLossAmount={sl.profitLossAmount}
-                        roi={sl.roi}
+                        profitLossAmount={Props.sl.profitLossAmount}
+                        roi={Props.sl.roi}
                       />
                     </div>
                   </div>

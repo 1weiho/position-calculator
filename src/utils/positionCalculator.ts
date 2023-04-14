@@ -1,4 +1,4 @@
-type SlAndTpDescription = {
+export type ProfitLossSummary = {
   profitLossAmount: number;
   roi: number;
 };
@@ -26,7 +26,7 @@ export const calculateSl = (
   leverage: number,
   enterPrice: number,
   stopLossPrice: number
-): SlAndTpDescription => {
+): ProfitLossSummary => {
   const roi = (enterPrice - stopLossPrice) / enterPrice;
   return {
     profitLossAmount: Math.abs(security * leverage * roi),
@@ -39,7 +39,7 @@ export const calculateTp = (
   leverage: number,
   enterPrice: number,
   takeProfitPrice: number
-): SlAndTpDescription => {
+): ProfitLossSummary => {
   const roi = Math.abs((takeProfitPrice - enterPrice) / enterPrice);
   return {
     profitLossAmount: security * leverage * roi,
