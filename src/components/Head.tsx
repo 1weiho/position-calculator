@@ -15,7 +15,7 @@ const Head = () => {
           合約倉位計算器
         </h1>
         <h2 className="text-nord3 text-xs tracking-widest">
-          以最大承受風險來回推倉位保證金大小
+          以最大承受風險來回推持倉成本
         </h2>
       </div>
     </>
