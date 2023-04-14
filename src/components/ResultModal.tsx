@@ -3,9 +3,7 @@ import { Fragment } from "react";
 import LabelPrice from "./LabelPrice";
 import ProfitLossDescription from "./ProfitLossDescription";
 import { X } from "lucide-react";
-import {
-  ProfitLossSummary,
-} from "../utils/positionCalculator";
+import { ProfitLossSummary } from "../utils/positionCalculator";
 
 type inputData = {
   longOrShort: "long" | "short";
@@ -24,7 +22,6 @@ const ResultModal = (Props: {
   tp: ProfitLossSummary;
   sl: ProfitLossSummary;
 }) => {
-
   return (
     <>
       <Transition appear show={Props.isOpen} as={Fragment}>
