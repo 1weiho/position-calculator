@@ -3,6 +3,11 @@ import { Fragment } from "react";
 import LabelPrice from "./LabelPrice";
 import ProfitLossDescription from "./ProfitLossDescription";
 import { X } from "lucide-react";
+import {
+  calculatePositionCost,
+  calculateSl,
+  calculateTp,
+} from "../utils/positionCalculator";
 
 type inputData = {
   longOrShort: "long" | "short";
@@ -13,53 +18,9 @@ type inputData = {
   tpPrice: number;
 };
 
-const calculateSecurityValue = (
-  longOrShort: "long" | "short",
-  enterPrice: number,
-  slPrice: number,
-  maxLoss: number,
-  leverage: number
-) => {
-  let sl;
-  if (longOrShort === "long") {
-    sl = (enterPrice - slPrice) / enterPrice;
-  } else {
-    sl = (slPrice - enterPrice) / enterPrice;
-  }
-  let value = maxLoss / sl;
-  let security = Math.round((value / leverage) * 100) / 100;
-  return security;
-};
-
 type SlAndTpDescription = {
   profitLossAmount: number;
   roi: number;
-};
-
-const calculateSl = (
-  security: number,
-  leverage: number,
-  enterPrice: number,
-  stopLossPrice: number
-): SlAndTpDescription => {
-  const roi = (enterPrice - stopLossPrice) / enterPrice;
-  return {
-    profitLossAmount: Math.abs(security * leverage * roi),
-    roi: -Math.abs(roi * leverage),
-  };
-};
-
-const calculateTp = (
-  security: number,
-  leverage: number,
-  enterPrice: number,
-  takeProfitPrice: number
-): SlAndTpDescription => {
-  const roi = Math.abs((takeProfitPrice - enterPrice) / enterPrice);
-  return {
-    profitLossAmount: security * leverage * roi,
-    roi: Math.abs(roi * leverage),
-  };
 };
 
 const ResultModal = (Props: {
@@ -67,7 +28,7 @@ const ResultModal = (Props: {
   closeModal: () => void;
   inputData: inputData;
 }) => {
-  const security: number = calculateSecurityValue(
+  const positionCost: number = calculatePositionCost(
     Props.inputData.longOrShort,
     Props.inputData.enterPrice,
     Props.inputData.slPrice,
@@ -76,14 +37,14 @@ const ResultModal = (Props: {
   );
 
   const tp: SlAndTpDescription = calculateTp(
-    security,
+    positionCost,
     Props.inputData.leverage,
     Props.inputData.enterPrice,
     Props.inputData.tpPrice
   );
 
   const sl: SlAndTpDescription = calculateSl(
-    security,
+    positionCost,
     Props.inputData.leverage,
     Props.inputData.enterPrice,
     Props.inputData.slPrice
@@ -127,8 +88,8 @@ const ResultModal = (Props: {
                   <div className="mt-4 w-full flex justify-between">
                     <div className="w-1/2">
                       <LabelPrice
-                        label="保證金（USDT）"
-                        price={security}
+                        label="持倉成本（USDT）"
+                        price={positionCost}
                         priceNordColor={true}
                       />
                     </div>
